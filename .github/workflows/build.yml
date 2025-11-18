@@ -52,22 +52,3 @@ jobs:
         docker tag ghcr.io/${{ github.repository }}:${{ github.sha }} ghcr.io/${{ github.repository }}:latest
         docker push ghcr.io/${{ github.repository }}:latest
         docker push ghcr.io/${{ github.repository }}:${{ github.sha }}
-
-    - name: Create GitHub Release
-      uses: softprops/action-gh-release@v2
-      with:
-        tag_name: ${{ github.sha }}
-        name: Release ${{ github.sha }}
-        body: |
-          Automated release for commit ${{ github.sha }}
-
-          ## Changes
-          - Built and pushed Docker image to GHCR
-          - Image: `ghcr.io/${{ github.repository }}:${{ github.sha }}`
-
-          ## Deployment
-          Update your HelmRelease to use tag: `${{ github.sha }}`
-        draft: false
-        prerelease: false
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
